@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-background: #030712;
-  --color-foreground: #f8fafc;
-  --color-muted: #94a3b8;
-  --color-accent: #06b6d4;
-  --color-accent-secondary: #3b82f6;
-  --font-sans: var(--font-geist-sans);
+  --color-white: #ffffff;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-surface: #ebebeb;
+  --color-signal: #e85d04;
+  --color-tech: #2d6a4f;
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -15,35 +17,26 @@ html {
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
+  background: var(--color-white);
+  color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-@keyframes grid-pulse {
+@keyframes blink-out {
   0%,
+  65% {
+    opacity: 1;
+  }
   100% {
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.7;
+    opacity: 0;
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+.cursor-out {
+  animation: blink-out 3.5s step-end forwards;
 }
 
-.animate-grid-pulse {
-  animation: grid-pulse 4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+::selection {
+  background: #e85d04;
+  color: #ffffff;
 }

@@ -5,8 +5,12 @@
   --color-ink: #1a1a1a;
   --color-muted: #6b6b6b;
   --color-surface: #ebebeb;
+  --color-cream: #f4efe5;
+  --color-paper: #fbf7ee;
   --color-signal: #e85d04;
   --color-tech: #2d6a4f;
+  --color-harbor: #12312a;
+  --color-clay: #c6502b;
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-dm-sans);
   --font-mono: var(--font-geist-mono);

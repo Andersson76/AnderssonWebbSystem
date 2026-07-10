@@ -1,217 +1,145 @@
 "use client";
 
-import { motion, useMotionValue, type PanInfo } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useInView, type Variants } from "framer-motion";
+import { useRef } from "react";
 
-const panels = [
+const services = [
   {
-    title: "Företagswebbar",
-    tag: "Webb",
-    tagColor: "bg-signal",
-    description:
-      "Skräddarsydda webbplatser med tydlig struktur, snabb laddning och ett utseende som speglar ert företag.",
-    Preview: WebPreview,
-    height: "h-[480px]",
+    title: "Affärssida",
+    eyebrow: "01 / Synligt",
+    body: "En webbplats som förklarar vad ni gör utan att låta som alla andra. Struktur, copy, form och teknik byggs ihop från början.",
+    details: ["Startsidans logik", "Tjänstesidor", "Publicering"],
   },
   {
-    title: "SEO",
-    tag: "Sök",
-    tagColor: "bg-signal",
-    description:
-      "Teknisk grund, tydlig struktur och innehåll som gör att rätt kunder hittar er i Google — utan genvägar.",
-    Preview: SeoPreview,
-    height: "h-[440px]",
+    title: "Sökgrund",
+    eyebrow: "02 / Hittbart",
+    body: "Teknisk SEO, innehållsstruktur och landningssidor för de sökningar som faktiskt kan bli affär.",
+    details: ["Sökintention", "Schema", "Prestanda"],
   },
   {
-    title: "System & integrationer",
-    tag: "System",
-    tagColor: "bg-tech",
-    description:
-      "API:er, databaser och kopplingar mellan era system — byggt för att faktiskt fungera i vardagen.",
-    Preview: SystemPreview,
-    height: "h-[500px]",
+    title: "Systemkoppling",
+    eyebrow: "03 / Bakom",
+    body: "När webben ska prata med formulär, bokning, CRM, e-post, databaser eller interna flöden bygger jag kopplingen.",
+    details: ["API", "Automation", "Datamodell"],
   },
 ];
 
-function WebPreview() {
-  return (
-    <div className="relative flex h-full flex-col bg-white p-7">
-      <div className="h-[3px] w-full bg-signal" />
-      <p
-        className="pointer-events-none absolute -right-2 bottom-0 font-display text-[7rem] font-light leading-none tracking-tight text-ink/[0.04]"
-        aria-hidden="true"
-      >
-        Form
-      </p>
-      <div className="relative mt-8 flex flex-1 flex-col justify-between">
-        <div>
-          <p className="font-display text-2xl font-light leading-tight tracking-tight text-ink lg:text-3xl">
-            Layout som bär
-            <br />
-            identitet
-          </p>
-          <div className="mt-6 space-y-2">
-            <div className="h-px w-full bg-ink/10" />
-            <div className="h-px w-4/5 bg-ink/10" />
-            <div className="h-px w-3/5 bg-signal/40" />
-          </div>
-        </div>
-        <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-muted">
-          Design · Innehåll · Kod
-        </p>
-      </div>
-    </div>
-  );
-}
+const proof = [
+  "Direktkontakt med den som bygger",
+  "Design och kod i samma beslut",
+  "Lansering med fortsatt förvaltning i tanken",
+];
 
-function SeoPreview() {
-  return (
-    <div className="relative flex h-full flex-col bg-white p-7">
-      <div className="h-[3px] w-full bg-signal" />
-      <div className="relative mt-6 flex flex-1 flex-col justify-center">
-        <p className="font-display text-[clamp(2.5rem,8vw,4rem)] font-light leading-[0.88] tracking-tight text-ink">
-          Syn
-          <br />
-          lig
-          <br />
-          het
-        </p>
-        <div className="mt-8 max-w-[200px]">
-          <div className="flex items-end gap-[3px]">
-            {[35, 50, 42, 68, 58, 82, 95].map((h, i) => (
-              <div
-                key={i}
-                className={`flex-1 ${i === 6 ? "bg-signal" : "bg-ink/10"}`}
-                style={{ height: `${h * 0.55}px` }}
-              />
-            ))}
-          </div>
-          <p className="mt-3 font-mono text-[10px] text-muted">
-            Organisk tillväxt ↑
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
+const variants: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: i * 0.13,
+      duration: 0.62,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
+  }),
+};
 
-function SystemPreview() {
+function ServiceDiagram() {
   return (
-    <div className="relative flex h-full flex-col bg-ink p-7">
-      <div className="h-[3px] w-full bg-tech" />
-      <div className="relative mt-8 flex flex-1 flex-col justify-between">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/35">
-          Integration
-        </p>
-        <div className="space-y-3">
-          {["Webb", "CRM", "API", "Databas"].map((label, i) => (
-            <div key={label} className="flex items-center gap-3">
-              <span className="font-mono text-[10px] text-signal">
-                0{i + 1}
-              </span>
-              <span className="border border-white/15 px-3 py-1.5 font-mono text-[11px] text-white/80">
-                {label}
-              </span>
-              {i < 3 && (
-                <span className="font-mono text-[10px] text-white/25">→</span>
-              )}
-            </div>
-          ))}
-        </div>
-        <p className="font-display text-xl font-light text-white">
-          Allt ska prata
+    <div className="grid min-h-[420px] grid-rows-[1fr_auto] border border-ink/12 bg-ink p-5 text-white">
+      <div className="grid grid-cols-3 gap-3">
+        {["Kund", "Innehåll", "System"].map((label, i) => (
+          <div
+            key={label}
+            className="flex flex-col justify-between border border-white/14 p-3"
+          >
+            <span className="font-mono text-[10px] text-white/45">
+              0{i + 1}
+            </span>
+            <span className="text-[15px]">{label}</span>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6">
+        <p className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.92] tracking-normal">
+          En sida ska inte bara finnas.
           <br />
-          med varandra.
+          Den ska göra arbete.
         </p>
+        <div className="mt-6 h-2 w-full bg-white/12">
+          <div className="h-full w-[72%] bg-signal" />
+        </div>
       </div>
     </div>
   );
 }
 
 export function WhatIDo() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const [dragLimit, setDragLimit] = useState(0);
-
-  useEffect(() => {
-    const measure = () => {
-      const container = containerRef.current;
-      const track = trackRef.current;
-      if (!container || !track) return;
-      setDragLimit(Math.min(container.offsetWidth - track.scrollWidth, 0));
-    };
-
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  const handleDragEnd = (_: unknown, info: PanInfo) => {
-    x.set(Math.max(dragLimit, Math.min(0, x.get() + info.velocity.x * 0.12)));
-  };
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-90px" });
 
   return (
-    <section id="vad-jag-gor" className="bg-surface py-20 lg:py-28">
-      <div className="mx-auto mb-12 max-w-[1280px] px-6 lg:mb-16 lg:px-10">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
-              01 — Arbetet
-            </p>
-            <h2 className="mt-2 text-[clamp(2rem,5vw,3.25rem)] font-semibold tracking-[-0.03em] text-ink">
-              Vad jag gör
-            </h2>
-          </div>
-          <p className="max-w-sm text-[15px] leading-relaxed text-muted">
-            Tre områden — webb, sök och system. Jag tar hand om hela kedjan,
-            från idé till något som fungerar i produktion.
+    <section id="vad-jag-gor" ref={ref} className="bg-white py-18 lg:py-24">
+      <div className="mx-auto grid max-w-[1320px] gap-10 px-5 sm:px-7 lg:grid-cols-[0.82fr_1.18fr] lg:px-10">
+        <div className="lg:sticky lg:top-8 lg:h-fit">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
+            01 / Affärssidan
           </p>
+          <h2 className="mt-3 max-w-md text-[clamp(2.2rem,5vw,4.2rem)] font-semibold leading-[0.95] tracking-normal text-ink">
+            Mindre broschyr. Mer maskinrum.
+          </h2>
+          <p className="mt-5 max-w-md text-[16px] leading-[1.7] text-muted">
+            Sidan ska se egen ut, men också göra ett tydligt jobb: skapa
+            förtroende, sortera rätt besökare och ta bort friktion i vardagen.
+          </p>
+          <div className="mt-8 hidden lg:block">
+            <ServiceDiagram />
+          </div>
         </div>
-      </div>
 
-      <div
-        ref={containerRef}
-        className="cursor-grab overflow-hidden active:cursor-grabbing"
-      >
-        <motion.div
-          ref={trackRef}
-          style={{ x }}
-          drag="x"
-          dragConstraints={{ left: dragLimit, right: 0 }}
-          dragElastic={0.05}
-          dragTransition={{ bounceStiffness: 400, bounceDamping: 35 }}
-          onDragEnd={handleDragEnd}
-          className="flex items-end gap-5 pl-6 lg:gap-6 lg:pl-10"
-        >
-          {panels.map((panel) => (
-            <article
-              key={panel.title}
-              className={`w-[min(82vw,400px)] shrink-0 select-none ${panel.height}`}
-            >
-              <div className="flex h-full flex-col overflow-hidden border border-ink/8 bg-white shadow-[4px_4px_0_0_#e85d04]">
-                <div className="flex items-center gap-2 border-b border-ink/8 px-4 py-2.5">
-                  <span
-                    className={`${panel.tagColor} px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white`}
-                  >
-                    {panel.tag}
-                  </span>
-                </div>
-                <div className="flex-1">
-                  <panel.Preview />
-                </div>
-              </div>
-              <div className="mt-5">
-                <h3 className="text-lg font-semibold tracking-tight text-ink">
-                  {panel.title}
-                </h3>
-                <p className="mt-2 text-[13px] leading-relaxed text-muted">
-                  {panel.description}
+        <div>
+          <div className="grid gap-4">
+            {services.map((service, i) => (
+              <motion.article
+                key={service.title}
+                custom={i}
+                variants={variants}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="grid gap-5 border-t border-ink/14 py-7 sm:grid-cols-[150px_1fr]"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+                  {service.eyebrow}
                 </p>
-              </div>
-            </article>
-          ))}
-        </motion.div>
+                <div>
+                  <h3 className="text-2xl font-semibold tracking-normal text-ink">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 max-w-2xl text-[16px] leading-[1.7] text-ink/72">
+                    {service.body}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {service.details.map((detail) => (
+                      <span
+                        key={detail}
+                        className="border border-ink/12 bg-cream px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-ink"
+                      >
+                        {detail}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+
+          <div className="mt-10 grid gap-3 border border-ink/12 bg-paper p-5 sm:grid-cols-3">
+            {proof.map((item) => (
+              <p key={item} className="text-[14px] leading-relaxed text-ink">
+                {item}
+              </p>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

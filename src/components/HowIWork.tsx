@@ -5,30 +5,33 @@ import { useRef } from "react";
 
 const steps = [
   {
-    number: "01",
-    title: "Förstå",
-    body: "Jag börjar med att förstå vad ert företag faktiskt behöver — inte vad en mall rekommenderar. Vi går igenom mål, målgrupp och vad som ska hända efter lansering.",
+    title: "Vi hittar det som är sant",
+    number: "A",
+    body: "Vilka kunder vill ni ha mer av? Vad frågar de innan de köper? Vilka manuella moment borde webben eller systemen ta över?",
+    output: "Karta över budskap, sidor och funktioner.",
   },
   {
-    number: "02",
-    title: "Bygga",
-    body: "Design och kod i samma hand. Inget tappas mellan skiss och leverans. Jag bygger responsivt, snabbt och med kod som går att underhålla.",
+    title: "Jag bygger nära verkligheten",
+    number: "B",
+    body: "Design, text och kod växer tillsammans. Ni får se riktiga skärmar tidigt, inte en lång presentation som sedan måste översättas.",
+    output: "Fungerande vyer, innehåll och teknisk grund.",
   },
   {
-    number: "03",
-    title: "Leverera",
-    body: "Något som fungerar i vardagen — inte bara ser bra ut vid lansering. Jag ser till att ni kan hantera innehåll, att SEO-grunden finns, och att systemen pratar med varandra.",
+    title: "Vi lämnar inget halvt",
+    number: "C",
+    body: "Lansering handlar om mer än att trycka publicera. Jag ser över prestanda, indexering, formulär, felvägar och hur ni förvaltar sidan.",
+    output: "Lanserad sida med tydligt nästa steg.",
   },
 ];
 
-const stepVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
+const variants: Variants = {
+  hidden: { opacity: 0, y: 22 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: i * 0.15,
-      duration: 0.65,
+      delay: i * 0.14,
+      duration: 0.6,
       ease: [0.16, 1, 0.3, 1] as const,
     },
   }),
@@ -36,44 +39,47 @@ const stepVariants: Variants = {
 
 export function HowIWork() {
   const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "-90px" });
 
   return (
-    <section ref={ref} className="bg-white py-20 lg:py-28">
-      <div className="mx-auto max-w-[1280px] px-6 lg:px-10">
-        <div className="mb-14 lg:mb-20">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
-            02 — Process
-          </p>
-          <h2 className="mt-2 text-[clamp(2rem,5vw,3.25rem)] font-semibold tracking-[-0.03em] text-ink">
-            Så jobbar jag
-          </h2>
-          <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-muted">
-            En rak process utan byråkrati. Ni pratar direkt med mig — från
-            första mötet till färdig leverans.
+    <section ref={ref} className="bg-harbor py-18 text-white lg:py-24">
+      <div className="mx-auto max-w-[1320px] px-5 sm:px-7 lg:px-10">
+        <div className="grid gap-8 lg:grid-cols-[0.72fr_1fr] lg:items-end">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/55">
+              02 / Sättet
+            </p>
+            <h2 className="mt-3 max-w-lg text-[clamp(2.3rem,5vw,4.8rem)] font-semibold leading-[0.94] tracking-normal">
+              Kort väg mellan tanke och produktion.
+            </h2>
+          </div>
+          <p className="max-w-xl text-[17px] leading-[1.7] text-white/72">
+            Jag vill att processen ska kännas mer som ett arbetsmöte än en
+            byråprocess. Färre lager, snabbare beslut, tydligare ansvar.
           </p>
         </div>
 
-        <ol className="grid gap-0 lg:grid-cols-3 lg:gap-8">
+        <ol className="mt-12 grid border-t border-white/18 lg:mt-16 lg:grid-cols-3">
           {steps.map((step, i) => (
             <motion.li
               key={step.number}
               custom={i}
-              variants={stepVariants}
+              variants={variants}
               initial="hidden"
               animate={inView ? "visible" : "hidden"}
-              className="border-t-[3px] border-signal py-8 lg:border-t-[3px] lg:py-0 lg:pt-6"
+              className="border-b border-white/18 py-7 lg:border-b-0 lg:border-r lg:pr-8 lg:last:border-r-0 lg:[&:not(:first-child)]:pl-8"
             >
-              <div className="flex items-baseline gap-3">
-                <span className="font-mono text-sm font-medium text-signal">
-                  {step.number}
-                </span>
-                <h3 className="font-mono text-sm font-medium uppercase tracking-[0.12em] text-ink">
-                  {step.title}
-                </h3>
-              </div>
-              <p className="mt-4 text-[15px] leading-[1.65] text-muted">
+              <span className="inline-grid size-10 place-items-center bg-signal font-mono text-sm text-white">
+                {step.number}
+              </span>
+              <h3 className="mt-6 text-2xl font-semibold tracking-normal">
+                {step.title}
+              </h3>
+              <p className="mt-4 text-[15px] leading-[1.7] text-white/70">
                 {step.body}
+              </p>
+              <p className="mt-6 border-l-2 border-white/24 pl-4 font-mono text-[11px] uppercase tracking-[0.13em] text-white/72">
+                {step.output}
               </p>
             </motion.li>
           ))}

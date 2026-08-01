@@ -28,7 +28,7 @@ function OperatingBoard() {
       initial={{ opacity: 0, y: 20, rotate: 0.4 }}
       animate={{ opacity: 1, y: 0, rotate: 0 }}
       transition={{ delay: 0.42, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-      className="relative min-h-[430px] border border-ink/12 bg-paper p-4 shadow-[10px_10px_0_0_#12312a]"
+      className="relative min-h-[380px] border border-ink/12 bg-paper p-4 shadow-[10px_10px_0_0_#2b7a78] lg:min-h-[410px]"
       aria-label="Visuell arbetsyta för webb, sök och system"
     >
       <div className="flex items-center justify-between border-b border-ink/12 pb-3">
@@ -103,7 +103,6 @@ function OperatingBoard() {
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-cream">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(26,26,26,0.055)_1px,transparent_1px),linear-gradient(to_bottom,rgba(26,26,26,0.055)_1px,transparent_1px)] bg-[size:42px_42px]" />
       <header className="relative mx-auto flex w-full max-w-[1320px] items-start justify-between gap-5 px-5 py-6 sm:px-7 lg:px-10 lg:py-8">
         <div>
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-ink">
@@ -121,12 +120,12 @@ export function Hero() {
         </a>
       </header>
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-92px)] w-full max-w-[1320px] gap-12 px-5 pb-16 pt-8 sm:px-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.7fr)] lg:items-center lg:px-10 lg:pb-20 lg:pt-2">
+      <div className="relative mx-auto grid min-h-[calc(100svh-92px)] w-full max-w-[1320px] gap-12 px-5 pb-20 pt-8 sm:px-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.7fr)] lg:items-center lg:px-10 lg:pb-24 lg:pt-2">
         <div>
           <p className="mb-6 inline-flex border border-ink/15 bg-white px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
             En liten digital verkstad för företag som vill vara begripliga
           </p>
-          <h1 className="max-w-5xl text-[clamp(3.1rem,10vw,8.7rem)] font-semibold leading-[0.9] tracking-normal text-ink">
+          <h1 className="max-w-5xl text-[clamp(2.9rem,6.8vw,5.8rem)] font-semibold leading-[0.9] tracking-normal text-ink">
             {["Webb med", "egenvikt.", "System med", "minne."].map(
               (line, i) => (
                 <span key={line} className="block overflow-hidden">
@@ -148,7 +147,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.78, duration: 0.7 }}
-            className="mt-9 grid gap-5 lg:grid-cols-[1fr_220px]"
+            className="mt-7 grid gap-5 lg:grid-cols-[1fr_220px]"
           >
             <p className="max-w-xl text-[18px] leading-[1.65] text-ink/78">
               Jag bygger affärssidor, sökstruktur och systemkopplingar som
@@ -169,7 +168,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.05, duration: 0.55 }}
-            className="mt-9 flex flex-wrap items-center gap-3"
+            className="mt-6 flex flex-wrap items-center gap-3"
           >
             <a
               href="#kontakt"

@@ -36,7 +36,7 @@ export function Contact() {
             </div>
           </div>
 
-          <aside className="border border-ink/12 bg-white p-6 shadow-[8px_8px_0_0_#c6502b] lg:p-8">
+          <aside className="border border-ink/12 bg-white p-6 shadow-[8px_8px_0_0_#2b7a78] lg:p-8">
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
               Skriv eller ring
             </p>

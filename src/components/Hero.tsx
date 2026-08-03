@@ -1,6 +1,3 @@
-"use client";
-
-import { motion, type Variants } from "framer-motion";
 import { SITE } from "@/lib/site";
 
 const notes = [
@@ -9,33 +6,21 @@ const notes = [
   { label: "System", value: "Mindre handarbete" },
 ];
 
-const lineVariants: Variants = {
-  hidden: { opacity: 0, y: "105%" },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.08 + i * 0.12,
-      duration: 0.78,
-      ease: [0.16, 1, 0.3, 1] as const,
-    },
-  }),
-};
-
 function OperatingBoard() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20, rotate: 0.4 }}
-      animate={{ opacity: 1, y: 0, rotate: 0 }}
-      transition={{ delay: 0.42, duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+    <div
+      aria-hidden="true"
       className="relative min-h-[380px] border border-ink/12 bg-paper p-4 shadow-[10px_10px_0_0_#2b7a78] lg:min-h-[410px]"
-      aria-label="Visuell arbetsyta för webb, sök och system"
+      data-operating-board
     >
-      <div className="flex items-center justify-between border-b border-ink/12 pb-3">
+      <div
+        className="flex items-center justify-between border-b border-ink/12 pb-3"
+        data-board-layer
+      >
         <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
           Arbetsbord / {SITE.location}
         </p>
-        <div className="flex gap-1.5" aria-hidden="true">
+        <div className="flex gap-1.5">
           <span className="size-2 bg-signal" />
           <span className="size-2 bg-harbor" />
           <span className="size-2 bg-ink" />
@@ -43,7 +28,10 @@ function OperatingBoard() {
       </div>
 
       <div className="mt-5 grid grid-cols-[1fr_96px] gap-4">
-        <div className="border border-ink/12 bg-white p-4">
+        <div
+          className="border border-ink/12 bg-white p-4"
+          data-board-layer
+        >
           <p className="font-display text-3xl leading-[0.95] tracking-normal text-ink">
             Det synliga
             <br />
@@ -52,13 +40,13 @@ function OperatingBoard() {
             osynliga.
           </p>
           <div className="mt-7 grid gap-2">
-            {notes.map((note, i) => (
+            {notes.map((note, index) => (
               <div
                 key={note.label}
                 className="grid grid-cols-[54px_1fr] items-center border-t border-ink/10 pt-2"
               >
                 <span className="font-mono text-[10px] uppercase tracking-wide text-signal">
-                  0{i + 1}
+                  0{index + 1}
                 </span>
                 <span className="text-[13px] text-ink">{note.value}</span>
               </div>
@@ -66,28 +54,34 @@ function OperatingBoard() {
           </div>
         </div>
 
-        <div className="grid gap-3">
+        <div className="grid gap-3" data-board-layer>
           <div className="bg-harbor p-3 text-white">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/55">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/65">
               Status
             </p>
             <p className="mt-8 font-mono text-xl">Live</p>
           </div>
-          <div className="border border-ink/12 bg-clay p-3">
-            <p className="font-mono text-[9px] uppercase tracking-[0.18em] text-white/70">
+          <div className="bg-clay p-3 text-white">
+            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-white/80">
               Fokus
             </p>
-            <p className="mt-8 font-mono text-xl text-white">Nytta</p>
+            <p className="mt-8 font-mono text-xl">Nytta</p>
           </div>
         </div>
       </div>
 
-      <div className="absolute -bottom-6 left-6 right-6 border border-ink/12 bg-white p-4">
-        <div className="flex items-end gap-2" aria-hidden="true">
-          {[38, 62, 44, 78, 54, 88, 70, 96].map((height, i) => (
+      <div
+        className="absolute -bottom-6 left-6 right-6 border border-ink/12 bg-white p-4"
+        data-board-layer
+      >
+        <div className="flex items-end gap-2">
+          {[38, 62, 44, 78, 54, 88, 70, 96].map((height, index) => (
             <span
-              key={i}
-              className={i === 7 ? "w-full bg-signal" : "w-full bg-ink/12"}
+              key={height}
+              className={
+                index === 7 ? "w-full bg-signal" : "w-full bg-ink/12"
+              }
+              data-chart-bar
               style={{ height }}
             />
           ))}
@@ -96,13 +90,13 @@ function OperatingBoard() {
           Mer av rätt besökare, mindre av löst arbete
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-cream">
+    <section className="relative overflow-hidden bg-cream" data-hero>
       <header className="relative mx-auto flex w-full max-w-[1320px] items-start justify-between gap-5 px-5 py-6 sm:px-7 lg:px-10 lg:py-8">
         <div>
           <p className="font-mono text-[12px] uppercase tracking-[0.18em] text-ink">
@@ -120,34 +114,29 @@ export function Hero() {
         </a>
       </header>
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-92px)] w-full max-w-[1320px] gap-12 px-5 pb-20 pt-8 sm:px-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.7fr)] lg:items-center lg:px-10 lg:pb-24 lg:pt-2">
-        <div>
-          <p className="mb-6 inline-flex border border-ink/15 bg-white px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
+      <div className="relative mx-auto grid min-h-[calc(100svh-92px)] w-full max-w-[1320px] gap-12 px-5 pb-24 pt-8 sm:px-7 lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.7fr)] lg:items-center lg:px-10 lg:pb-28 lg:pt-2">
+        <div data-hero-copy>
+          <p
+            className="mb-6 inline-flex border border-ink/15 bg-white px-3 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-muted"
+            data-hero-detail
+          >
             En liten digital verkstad för företag som vill vara begripliga
           </p>
           <h1 className="max-w-5xl text-[clamp(2.9rem,6.8vw,5.8rem)] font-semibold leading-[0.9] tracking-normal text-ink">
             {["Webb med", "egenvikt.", "System med", "minne."].map(
-              (line, i) => (
+              (line) => (
                 <span key={line} className="block overflow-hidden">
-                  <motion.span
-                    custom={i}
-                    variants={lineVariants}
-                    initial="hidden"
-                    animate="visible"
-                    className="block"
-                  >
+                  <span className="block" data-hero-line>
                     {line}
-                  </motion.span>
+                  </span>
                 </span>
               ),
             )}
           </h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.78, duration: 0.7 }}
+          <div
             className="mt-7 grid gap-5 lg:grid-cols-[1fr_220px]"
+            data-hero-detail
           >
             <p className="max-w-xl text-[18px] leading-[1.65] text-ink/78">
               Jag bygger affärssidor, sökstruktur och systemkopplingar som
@@ -162,13 +151,11 @@ export function Hero() {
                 Vad ska kunder förstå, göra och komma tillbaka till?
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.05, duration: 0.55 }}
+          <div
             className="mt-6 flex flex-wrap items-center gap-3"
+            data-hero-detail
           >
             <a
               href="#kontakt"
@@ -182,10 +169,20 @@ export function Hero() {
             >
               Se arbetet
             </a>
-          </motion.div>
+          </div>
         </div>
 
         <OperatingBoard />
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-3 font-mono text-[9px] uppercase tracking-[0.2em] text-muted lg:flex"
+        data-hero-detail
+      >
+        <span className="h-px w-10 bg-ink/30" />
+        Scrolla för arbetsgången
+        <span className="h-px w-10 bg-ink/30" />
       </div>
     </section>
   );

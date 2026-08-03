@@ -1,6 +1,7 @@
 # Andersson Webb & System AB
 
-Modern företagswebbplats byggd med Next.js 15, TypeScript, Tailwind CSS och Framer Motion.
+Modern företagswebbplats byggd med Next.js 15, TypeScript, Tailwind CSS,
+GSAP/ScrollTrigger och Lenis.
 
 ## Kom igång
 
@@ -16,7 +17,8 @@ npm run dev
 - **Next.js 15** — App Router
 - **TypeScript**
 - **Tailwind CSS v4**
-- **Framer Motion** — animationer
+- **GSAP + ScrollTrigger** — scrollstyrda animationer och pinned content
+- **Lenis** — mjuk scroll med native touch-scroll och tillgänglig fallback
 
 ## Struktur
 
@@ -27,5 +29,12 @@ src/
 │   ├── layout.tsx
 │   └── page.tsx
 └── components/
-    └── Hero.tsx
+    ├── Contact.tsx
+    ├── Hero.tsx
+    ├── HowIWork.tsx
+    ├── MotionExperience.tsx
+    └── WhatIDo.tsx
 ```
+
+Animationerna stängs av för `prefers-reduced-motion`. Lenis och GSAP delar en
+enda animationsticker och städas upp när upplevelselagret avmonteras.

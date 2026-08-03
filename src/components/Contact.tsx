@@ -9,10 +9,14 @@ const prompts = [
 
 export function Contact() {
   return (
-    <section id="kontakt" className="bg-cream py-18 lg:py-24">
+    <section
+      id="kontakt"
+      className="scroll-mt-8 bg-cream py-18 lg:py-24"
+      data-contact
+    >
       <div className="mx-auto max-w-[1320px] px-5 sm:px-7 lg:px-10">
         <div className="grid gap-10 lg:grid-cols-[1fr_420px] lg:items-start">
-          <div>
+          <div data-reveal>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-signal">
               03 / Kontakt
             </p>
@@ -36,7 +40,10 @@ export function Contact() {
             </div>
           </div>
 
-          <aside className="border border-ink/12 bg-white p-6 shadow-[8px_8px_0_0_#2b7a78] lg:p-8">
+          <aside
+            className="border border-ink/12 bg-white p-6 shadow-[8px_8px_0_0_#2b7a78] lg:p-8"
+            data-reveal
+          >
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted">
               Skriv eller ring
             </p>
@@ -65,7 +72,10 @@ export function Contact() {
           </aside>
         </div>
 
-        <footer className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-ink/12 pt-7">
+        <footer
+          className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-ink/12 pt-7"
+          data-reveal
+        >
           <p className="text-[12px] text-muted">
             © {new Date().getFullYear()} {SITE.company}
           </p>
